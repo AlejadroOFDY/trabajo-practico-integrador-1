@@ -15,7 +15,7 @@ export const ProfileModel = sequelize.define("Profile", {
     allowNull: true,
   },
   avatar_url: {
-    type: DataTypes.CHAR(255),
+    type: DataTypes.CHAR(/*255*/),
     allowNull: true,
   },
   birth_date: {

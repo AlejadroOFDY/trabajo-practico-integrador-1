@@ -11,7 +11,7 @@ export const ArticleModel = sequelize.define("Article", {
     allowNull: false,
   },
   excerpt: {
-    type: DataTypes.CHAR(500),
+    type: DataTypes.CHAR(/* 500*/),
     allowNull: true,
   },
   status: {
