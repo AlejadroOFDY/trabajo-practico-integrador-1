@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { start_DB } from "./src/config/database.js";
 import userRoute from "./src/routes/user.route.js";
-import { ArticleModel } from "./src/models/article.model.js";
+import articleRoute from "./src/routes/article.route.js";
 import { ArticleTagModel } from "./src/models/articleTag.model.js";
 import profileRoute from "./src/routes/profile.route.js";
 import tagRoute from "./src/routes/tag.route.js";
@@ -16,6 +16,7 @@ app.use(express.json());
 app.use("/api/user", userRoute);
 app.use("/api/profile", profileRoute);
 app.use("/api/tag", tagRoute);
+app.use("/api/article", articleRoute);
 
 app.listen(PORT, async () => {
   await start_DB(), console.log(`Servidor corriendo en: localhost ${PORT}`);

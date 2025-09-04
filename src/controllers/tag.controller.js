@@ -42,7 +42,7 @@ export const createTag = async (req, res) => {
 // Modificar
 export const updateTag = async (req, res) => {
   try {
-    const tag = await TagModel.findByPk();
+    const tag = await TagModel.findByPk(req.params.id);
     const { name } = req.body;
     await tag.update({
       name: name || tag.name,
@@ -58,7 +58,7 @@ export const updateTag = async (req, res) => {
 // Eliminar
 export const deleteTag = async (req, res) => {
   try {
-    const tag = await TagModel.findByPk();
+    const tag = await TagModel.findByPk(req.params.id);
     await tag.destroy();
     return res.status(200).json("La etiqueta se eliminó exitosamente");
   } catch (error) {

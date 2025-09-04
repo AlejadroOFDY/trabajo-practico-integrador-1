@@ -49,7 +49,7 @@ export const createProfile = async (req, res) => {
 // Modificar
 export const updateProfile = async (req, res) => {
   try {
-    const profile = await ProfileModel.findByPk();
+    const profile = await ProfileModel.findByPk(req.params.id);
     const { first_name, last_name, biography, avatar_url, birth_date } =
       req.body;
     await profile.update({
@@ -70,7 +70,7 @@ export const updateProfile = async (req, res) => {
 // Eliminar
 export const deleteProfile = async (req, res) => {
   try {
-    const profile = await ProfileModel.findByPk();
+    const profile = await ProfileModel.findByPk(req.params.id);
     await profile.destroy();
     return res.status(200).json("El perfil se eliminó exitosamente");
   } catch (error) {

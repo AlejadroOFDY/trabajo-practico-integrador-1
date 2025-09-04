@@ -63,7 +63,7 @@ export const updateUserValidation = [
     .isInt()
     .withMessage("El id debe ser un número entero")
     .custom(async (value) => {
-      const existingUser = await UserModel.findByPk();
+      const existingUser = await UserModel.findByPk(value);
       if (!existingUser) {
         throw new Error("No se encontró al usuario");
       }
@@ -77,7 +77,7 @@ export const updateUserValidation = [
     .withMessage("El nombre de usuario debe contener entre 3 y 20 caracteres")
     .custom(async (value) => {
       const existingUser = await UserModel.findOne({
-        where: { username: { [Op.ne]: value } },
+        where: { username: value, id: { [Op.ne]: req.params.id } },
       });
       if (existingUser) {
         throw new Error("El nombre de usuario ya está en uso");
