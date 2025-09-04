@@ -48,7 +48,7 @@ export const createUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const user = await UserModel.findOne({
-      where: { id: req.params.id /* Deleted: false */ },
+      where: { id: req.params.id, Deleted: false },
     });
     const { username, email, password, role } = req.body;
     await user.update({

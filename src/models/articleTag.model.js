@@ -1,5 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
+import { ArticleModel } from "./article.model.js";
+import { TagModel } from "./tag.model.js";
 
 export const ArticleTagModel = sequelize.define("ArticleTag", {
   id: {
@@ -8,4 +10,28 @@ export const ArticleTagModel = sequelize.define("ArticleTag", {
     autoIncrement: true,
     allowNull: false,
   },
+});
+
+ArticleTagModel.belongsTo(ArticleModel, {
+  foreignKey: "article_id",
+  as: "article",
+});
+
+ArticleTagModel.belongsTo(TagModel, {
+  foreignKey: "tag_id",
+  as: "tag",
+});
+
+ArticleModel.belongsToMany(TagModel, {
+  through: ArticleTagModel,
+  foreignKey: "article_id",
+  as: "article",
+  onDelete: "CASCADE",
+});
+
+TagModel.belongsToMany(ArticleModel, {
+  through: ArticleTagModel,
+  foreignKey: "tag_id",
+  as: "tag",
+  onDelete: "CASCADE",
 });
