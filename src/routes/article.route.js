@@ -5,7 +5,7 @@ import {
   createArticle,
   updateArticle,
   deleteArticle,
-} from "../controllers/article.controlle.js";
+} from "../controllers/article.controller.js";
 
 import { validator } from "../middlewares/validator.js";
 
