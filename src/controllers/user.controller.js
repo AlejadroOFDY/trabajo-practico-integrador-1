@@ -13,13 +13,13 @@ export const getAllUsers = async (req, res) => {
           as: "profile",
           attributes: ["first_name", "last_name", "birth_date", "user_id"],
         },
-      ],
+      ] /* ,
       include: [
         {
           model: ArticleModel,
           as: "articles",
         },
-      ],
+      ], */,
     });
     return res.status(200).json(users);
   } catch (error) {
@@ -102,6 +102,9 @@ export const deleteUser = async (req, res) => {
   try {
     const user = await UserModel.findOne({
       where: { id: req.params.id, deleted: false },
+    });
+    await ProfileModel.destroy({
+      where: { user_id: user.id },
     });
     await user.update({ deleted: true });
     return res.status(200).json("Se eliminó el usuario exitosamente");

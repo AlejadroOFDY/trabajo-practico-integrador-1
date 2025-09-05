@@ -15,11 +15,13 @@ export const ArticleTagModel = sequelize.define("ArticleTag", {
 ArticleTagModel.belongsTo(ArticleModel, {
   foreignKey: "article_id",
   as: "article",
+  onDelete: "CASCADE",
 });
 
 ArticleTagModel.belongsTo(TagModel, {
   foreignKey: "tag_id",
   as: "tag",
+  onDelete: "CASCADE",
 });
 
 ArticleModel.belongsToMany(TagModel, {

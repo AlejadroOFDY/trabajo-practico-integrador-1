@@ -1,4 +1,5 @@
 import { ArticleModel } from "../models/article.model.js";
+import { ArticleTagModel } from "../models/articleTag.model.js";
 import { TagModel } from "../models/tag.model.js";
 import { UserModel } from "../models/user.model.js";
 
@@ -87,8 +88,10 @@ export const updateArticle = async (req, res) => {
 export const deleteArticle = async (req, res) => {
   try {
     const article = await ArticleModel.findByPk(req.params.id);
-
     await article.destroy();
+    await ArticleTagModel.destroy({
+      where: { article_id: article.id },
+    });
     return res.status(200).json("Se eliminó el artículo exitosamente");
   } catch (error) {
     return res.status(500).json({
