@@ -1,5 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
+import cookieParser from "cookie-parser";
 import { start_DB } from "./src/config/database.js";
 import userRoute from "./src/routes/user.route.js";
 import articleRoute from "./src/routes/article.route.js";
@@ -13,6 +15,13 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+app.use(cookieParser());
 app.use("/api/user", userRoute);
 app.use("/api/profile", profileRoute);
 app.use("/api/tag", tagRoute);

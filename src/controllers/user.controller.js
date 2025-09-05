@@ -13,13 +13,7 @@ export const getAllUsers = async (req, res) => {
           as: "profile",
           attributes: ["first_name", "last_name", "birth_date", "user_id"],
         },
-      ] /* ,
-      include: [
-        {
-          model: ArticleModel,
-          as: "articles",
-        },
-      ], */,
+      ],
     });
     return res.status(200).json(users);
   } catch (error) {
