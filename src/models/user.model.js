@@ -22,6 +22,10 @@ export const UserModel = sequelize.define(
       type: DataTypes.ENUM("user", "admin"),
       defaultValue: "user",
     },
+    deleted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
   { paranoid: true }
 );

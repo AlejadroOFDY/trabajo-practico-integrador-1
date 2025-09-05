@@ -1,14 +1,30 @@
 import { ArticleModel } from "../models/article.model.js";
+import { TagModel } from "../models/tag.model.js";
+import { UserModel } from "../models/user.model.js";
 
 // Obtener todo
 export const getAllArticles = async (req, res) => {
   try {
-    const article = await ArticleModel.findAll();
+    const article = await ArticleModel.findAll({
+      include: [
+        {
+          model: UserModel,
+          as: "author",
+        },
+      ],
+      include: [
+        {
+          model: TagModel,
+          as: "tags",
+        },
+      ],
+    });
     return res.status(200).json(article);
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: error.msg, msg: "No se pudieron obtener los artículos" });
+    return res.status(500).json({
+      error: error.message,
+      message: "No se pudieron obtener los artículos",
+    });
   }
 };
 
@@ -18,9 +34,10 @@ export const getArticleById = async (req, res) => {
     const article = await ArticleModel.findByPk(req.params.id);
     return res.status(200).json(article);
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: error.msg, msg: "No se pudo obtener el artículo" });
+    return res.status(500).json({
+      error: error.message,
+      message: "No se pudo obtener el artículo",
+    });
   }
 };
 
@@ -39,7 +56,7 @@ export const createArticle = async (req, res) => {
   } catch (error) {
     return res
       .status(500)
-      .json({ error: error.msg, msg: "No se pudo crear el artículo" });
+      .json({ error: error.message, message: "No se pudo crear el artículo" });
   }
 };
 
@@ -59,9 +76,10 @@ export const updateArticle = async (req, res) => {
 
     return res.status(200).json(article);
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: error.msg, msg: "No se pudo actualizar el artículo" });
+    return res.status(500).json({
+      error: error.message,
+      message: "No se pudo actualizar el artículo",
+    });
   }
 };
 
@@ -73,8 +91,9 @@ export const deleteArticle = async (req, res) => {
     await article.destroy();
     return res.status(200).json("Se eliminó el artículo exitosamente");
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: error.msg, msg: "No se pudo eliminar el artículo" });
+    return res.status(500).json({
+      error: error.message,
+      message: "No se pudo eliminar el artículo",
+    });
   }
 };

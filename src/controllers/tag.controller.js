@@ -8,7 +8,10 @@ export const getAllTags = async (req, res) => {
   } catch (error) {
     return res
       .status(500)
-      .json({ error: error.msg, msg: "No se pudieron obtener las etiquetas" });
+      .json({
+        error: error.message,
+        message: "No se pudieron obtener las etiquetas",
+      });
   }
 };
 
@@ -20,7 +23,10 @@ export const getTagById = async (req, res) => {
   } catch (error) {
     return res
       .status(500)
-      .json({ error: error.msg, msg: "No se pudo obtener la etiqueta" });
+      .json({
+        error: error.message,
+        message: "No se pudo obtener la etiqueta",
+      });
   }
 };
 
@@ -36,7 +42,7 @@ export const createTag = async (req, res) => {
   } catch (error) {
     return res
       .status(500)
-      .json({ error: error.msg, msg: "No se pudo crear la etiqueta" });
+      .json({ error: error.message, message: "No se pudo crear la etiqueta" });
   }
 };
 
@@ -52,7 +58,10 @@ export const updateTag = async (req, res) => {
   } catch (error) {
     return res
       .status(500)
-      .json({ error: error.msg, msg: "No se pudo actualizar la etiqueta" });
+      .json({
+        error: error.message,
+        message: "No se pudo actualizar la etiqueta",
+      });
   }
 };
 
@@ -65,6 +74,9 @@ export const deleteTag = async (req, res) => {
   } catch (error) {
     return res
       .status(500)
-      .json({ error: error.msg, msg: "No se pudo eliminar la etiqueta" });
+      .json({
+        error: error.message,
+        message: "No se pudo eliminar la etiqueta",
+      });
   }
 };

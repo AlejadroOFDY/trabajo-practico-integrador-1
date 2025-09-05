@@ -9,8 +9,9 @@ export const getAllArticleTags = async (req, res) => {
     return res.status(200).json(articleTag);
   } catch (error) {
     return res.status(500).json({
-      error: error.msg,
-      msg: "No se pudieron obtener las relaciones de los artículos con su etiquetas",
+      error: error.message,
+      message:
+        "No se pudieron obtener las relaciones de los artículos con su etiquetas",
     });
   }
 };
@@ -22,8 +23,8 @@ export const getArticleTagById = async (req, res) => {
     return res.status(200).json(articleTag);
   } catch (error) {
     return res.status(500).json({
-      error: error.msg,
-      msg: "No se pudo obtener la relación artículo-etiqueta",
+      error: error.message,
+      message: "No se pudo obtener la relación artículo-etiqueta",
     });
   }
 };
@@ -39,8 +40,8 @@ export const createArticleTag = async (req, res) => {
     return res.status(201).json(newArticleTag);
   } catch (error) {
     return res.status(500).json({
-      error: error.msg,
-      msg: "No se pudo crear la relación artículo-etiqueta",
+      error: error.message,
+      message: "No se pudo crear la relación artículo-etiqueta",
     });
   }
 };
@@ -59,8 +60,8 @@ export const updateArticleTag = async (req, res) => {
     return res.status(200).json(articleTag);
   } catch (error) {
     return res.status(500).json({
-      error: error.msg,
-      msg: "No se pudo actualizar la relación artículo-etiqueta",
+      error: error.message,
+      message: "No se pudo actualizar la relación artículo-etiqueta",
     });
   }
 };
@@ -75,8 +76,8 @@ export const deleteArticleTag = async (req, res) => {
       .json("Se eliminó la relación artículo-etiqueta exitosamente");
   } catch (error) {
     return res.status(500).json({
-      error: error.msg,
-      msg: "No se puedo eliminar la relación artículo-etiqueta",
+      error: error.message,
+      message: "No se puedo eliminar la relación artículo-etiqueta",
     });
   }
 };

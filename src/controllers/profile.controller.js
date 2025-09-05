@@ -1,14 +1,18 @@
 import { ProfileModel } from "../models/profile.model.js";
+import { UserModel } from "../models/user.model.js";
 
 // Obtener todo
 export const getAllProfiles = async (req, res) => {
   try {
-    const profile = await ProfileModel.findAll();
+    const profile = await ProfileModel.findAll({
+      include: [{ model: UserModel, as: "user" }],
+    });
     return res.status(200).json(profile);
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: error.msg, msg: "No se pudieron obtener los perfiles" });
+    return res.status(500).json({
+      error: error.message,
+      message: "No se pudieron obtener los perfiles",
+    });
   }
 };
 
@@ -16,13 +20,14 @@ export const getAllProfiles = async (req, res) => {
 export const getProfileById = async (req, res) => {
   try {
     const profile = await ProfileModel.findOne({
-      where: { id: req.params.id /* Deleted: false */ },
+      where: { id: req.params.id },
+      include: [{ model: UserModel, as: "user" }],
     });
     return res.status(200).json(profile);
   } catch (error) {
     return res
       .status(500)
-      .json({ error: error.msg, msg: "No se pudo obtener el perfil" });
+      .json({ error: error.message, message: "No se pudo obtener el perfil" });
   }
 };
 
@@ -49,7 +54,7 @@ export const createProfile = async (req, res) => {
   } catch (error) {
     return res
       .status(500)
-      .json({ error: error.msg, msg: "No se pudo crear el perfil" });
+      .json({ error: error.message, message: "No se pudo crear el perfil" });
   }
 };
 
@@ -68,9 +73,10 @@ export const updateProfile = async (req, res) => {
     });
     return res.status(200).json(profile);
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: error.msg, msg: "No se pudo actualizar el perfil" });
+    return res.status(500).json({
+      error: error.message,
+      message: "No se pudo actualizar el perfil",
+    });
   }
 };
 
@@ -83,6 +89,6 @@ export const deleteProfile = async (req, res) => {
   } catch (error) {
     return res
       .status(500)
-      .json({ error: error.msg, msg: "No se pudo eliminar el perfil" });
+      .json({ error: error.message, message: "No se pudo eliminar el perfil" });
   }
 };

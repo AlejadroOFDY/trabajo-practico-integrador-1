@@ -1,10 +1,12 @@
 import { UserModel } from "../models/user.model.js";
 import { ProfileModel } from "../models/profile.model.js";
+import { ArticleModel } from "../models/article.model.js";
 
 // Obtener todo
 export const getAllUsers = async (req, res) => {
   try {
     const users = await UserModel.findAll({
+      where: { deleted: false },
       include: [
         {
           model: ProfileModel,
@@ -12,12 +14,19 @@ export const getAllUsers = async (req, res) => {
           attributes: ["first_name", "last_name", "birth_date", "user_id"],
         },
       ],
+      include: [
+        {
+          model: ArticleModel,
+          as: "articles",
+        },
+      ],
     });
     return res.status(200).json(users);
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: error.msg, msg: "No se pudieron obtener los usuarios" });
+    return res.status(500).json({
+      error: error.message,
+      message: "No se pudieron obtener los usuarios",
+    });
   }
 };
 
@@ -25,13 +34,26 @@ export const getAllUsers = async (req, res) => {
 export const getUserById = async (req, res) => {
   try {
     const user = await UserModel.findOne({
-      where: { id: req.params.id /* Deleted: false */ },
+      where: { id: req.params.id, deleted: false },
+      include: [
+        {
+          model: ProfileModel,
+          as: "profile",
+          attributes: ["first_name", "last_name", "birth_date", "user_id"],
+        },
+      ],
+      include: [
+        {
+          model: ArticleModel,
+          as: "articles",
+        },
+      ],
     });
     return res.status(200).json(user);
   } catch (error) {
     return res
       .status(500)
-      .json({ error: error.msg, msg: "No se pudo obtener el usuario" });
+      .json({ error: error.message, message: "No se pudo obtener el usuario" });
   }
 };
 
@@ -49,7 +71,7 @@ export const createUser = async (req, res) => {
   } catch (error) {
     return res
       .status(500)
-      .json({ error: error.msg, msg: "No se pudo crear el usuario" });
+      .json({ error: error.message, message: "No se pudo crear el usuario" });
   }
 };
 
@@ -57,7 +79,7 @@ export const createUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const user = await UserModel.findOne({
-      where: { id: req.params.id, Deleted: false },
+      where: { id: req.params.id, deleted: false },
     });
     const { username, email, password, role } = req.body;
     await user.update({
@@ -68,9 +90,10 @@ export const updateUser = async (req, res) => {
     });
     return res.status(200).json(user);
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: error.msg, msg: "No se pudo actualizar el usuario" });
+    return res.status(500).json({
+      error: error.message,
+      message: "No se pudo actualizar el usuario",
+    });
   }
 };
 
@@ -78,12 +101,14 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     const user = await UserModel.findOne({
-      where: { id: req.params.id /* Deleted: false */ },
+      where: { id: req.params.id, deleted: false },
     });
     await user.update({ deleted: true });
+    return res.status(200).json("Se eliminó el usuario exitosamente");
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: error.msg, msg: "No se pudo eliminar el usuario" });
+    return res.status(500).json({
+      error: error.message,
+      message: "No se pudo eliminar el usuario",
+    });
   }
 };

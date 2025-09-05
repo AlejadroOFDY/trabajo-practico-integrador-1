@@ -107,7 +107,7 @@ export const updateUserValidation = [
     .optional()
     .notEmpty()
     .withMessage("El rol no puede estar vacío")
-    .isIn(["user", "admin"]) // admin no me lo toma
+    .isIn(["user", "admin"])
     .withMessage("los roles solo pueden ser user o admin"),
 ];
 
