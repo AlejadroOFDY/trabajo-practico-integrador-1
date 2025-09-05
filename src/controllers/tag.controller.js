@@ -4,7 +4,7 @@ import { TagModel } from "../models/tag.model.js";
 export const getAllTags = async (req, res) => {
   try {
     const tag = await TagModel.findAll();
-    return res.status(200).json();
+    return res.status(200).json(tag);
   } catch (error) {
     return res
       .status(500)
@@ -27,9 +27,10 @@ export const getTagById = async (req, res) => {
 // Crear
 export const createTag = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, article_id } = req.body;
     const newTag = await TagModel.create({
       name,
+      article_id,
     });
     return res.status(201).json(newTag);
   } catch (error) {

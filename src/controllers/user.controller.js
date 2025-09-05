@@ -1,9 +1,18 @@
 import { UserModel } from "../models/user.model.js";
+import { ProfileModel } from "../models/profile.model.js";
 
 // Obtener todo
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await UserModel.findAll();
+    const users = await UserModel.findAll({
+      include: [
+        {
+          model: ProfileModel,
+          as: "profile",
+          attributes: ["first_name", "last_name", "birth_date", "user_id"],
+        },
+      ],
+    });
     return res.status(200).json(users);
   } catch (error) {
     return res
@@ -30,7 +39,7 @@ export const getUserById = async (req, res) => {
 export const createUser = async (req, res) => {
   try {
     const { username, email, password, role } = req.body;
-    const newUser = UserModel.create({
+    const newUser = await UserModel.create({
       username,
       email,
       password,
@@ -68,7 +77,7 @@ export const updateUser = async (req, res) => {
 // Eliminar
 export const deleteUser = async (req, res) => {
   try {
-    const user = UserModel.findOne({
+    const user = await UserModel.findOne({
       where: { id: req.params.id /* Deleted: false */ },
     });
     await user.update({ deleted: true });

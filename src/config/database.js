@@ -19,7 +19,7 @@ export const start_DB = async () => {
     console.log("Connection has been established successfully.");
     await sequelize.sync({
       alter: true,
-      /* force: true */
+      /* force: true, */
     });
   } catch (error) {
     console.error("Unable to connect to the database:", error);

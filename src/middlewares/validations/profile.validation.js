@@ -108,7 +108,7 @@ export const deleteProfileValidation = [
     .isInt()
     .withMessage("El id debe ser un número entero")
     .custom(async (value) => {
-      const existingProfile = await ProfileModel.findByPk();
+      const existingProfile = await ProfileModel.findByPk(value);
       if (!existingProfile) {
         throw new Error("No se encontró al perfil");
       }

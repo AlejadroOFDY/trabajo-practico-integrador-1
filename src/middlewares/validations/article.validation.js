@@ -87,7 +87,7 @@ export const updateArticleValidation = [
     .optional()
     .notEmpty()
     .withMessage("El estatus no puede estar vacío")
-    .contains("published" || "archived")
+    .isIn(["published", "archived"])
     .withMessage("El estatus solo puede ser publicado o archivado"),
 ];
 

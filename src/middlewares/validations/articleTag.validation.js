@@ -40,7 +40,7 @@ export const createArticleTagValidation = [
         throw new Error("No se encontró la etiqueta");
       }
     }),
-  body().custom(async (value) => {
+  body().custom(async (value, { req }) => {
     const { article_id, tag_id } = req.body;
     const existingRelation = await ArticleTagModel.findOne({
       where: { article_id, tag_id },

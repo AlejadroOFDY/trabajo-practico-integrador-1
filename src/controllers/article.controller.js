@@ -27,12 +27,13 @@ export const getArticleById = async (req, res) => {
 // Crear
 export const createArticle = async (req, res) => {
   try {
-    const { title, content, excerpt, status } = req.body;
+    const { title, content, excerpt, status, user_id } = req.body;
     const newArticle = await ArticleModel.create({
       title,
       content,
       excerpt,
       status,
+      user_id,
     });
     return res.status(201).json(newArticle);
   } catch (error) {

@@ -53,7 +53,7 @@ export const createUserValidation = [
     .optional()
     .notEmpty()
     .withMessage("El rol no puede estar vacío")
-    .contains("user" || "admin")
+    .isIn(["user", "admin"])
     .withMessage("los roles solo pueden ser user o admin"),
 ];
 
@@ -93,7 +93,7 @@ export const updateUserValidation = [
     .withMessage("El email solo puede tener una longitud de 100 caracteres") //
     .custom(async (value) => {
       const existingEmail = await UserModel.findOne({
-        where: { email: { [Op.ne]: value } },
+        where: { email: value, id: { [Op.ne]: req.params.id } },
       });
       if (existingEmail) {
         throw new Error("El email ya se encuentra registrado");
@@ -107,7 +107,7 @@ export const updateUserValidation = [
     .optional()
     .notEmpty()
     .withMessage("El rol no puede estar vacío")
-    .contains("user" || "admin")
+    .isIn(["user", "admin"]) // admin no me lo toma
     .withMessage("los roles solo pueden ser user o admin"),
 ];
 
@@ -117,7 +117,7 @@ export const deleteUserValidation = [
     .isInt()
     .withMessage("El id debe ser un número entero")
     .custom(async (value) => {
-      const existingUser = await UserModel.findByPk();
+      const existingUser = await UserModel.findByPk(value);
       if (!existingUser) {
         throw new Error("No se encontró al usuario");
       }

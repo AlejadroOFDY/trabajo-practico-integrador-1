@@ -23,11 +23,11 @@ export const ArticleModel = sequelize.define("Article", {
 
 ArticleModel.belongsTo(UserModel, {
   foreignKey: "user_id",
-  as: "user",
+  as: "author",
   onDelete: "CASCADE",
 });
 UserModel.hasMany(ArticleModel, {
   foreignKey: "user_id",
-  as: "article",
+  as: "articles",
   onDelete: "CASCADE",
 });

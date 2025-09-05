@@ -32,7 +32,7 @@ export const getArticleTagById = async (req, res) => {
 export const createArticleTag = async (req, res) => {
   try {
     const { article_id, tag_id } = req.body;
-    const newArticleTag = ArticleTagModel.create({
+    const newArticleTag = await ArticleTagModel.create({
       article_id,
       tag_id,
     });

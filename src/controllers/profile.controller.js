@@ -29,14 +29,21 @@ export const getProfileById = async (req, res) => {
 // Crear
 export const createProfile = async (req, res) => {
   try {
-    const { first_name, last_name, biography, avatar_url, birth_date } =
-      req.body;
+    const {
+      first_name,
+      last_name,
+      biography,
+      avatar_url,
+      birth_date,
+      user_id,
+    } = req.body;
     const newProfile = await ProfileModel.create({
       first_name,
       last_name,
       biography,
       avatar_url,
       birth_date,
+      user_id,
     });
     return res.status(201).json(newProfile);
   } catch (error) {
