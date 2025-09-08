@@ -8,6 +8,7 @@ import articleRoute from "./src/routes/article.route.js";
 import articleTagRoute from "./src/routes/articleTag.route.js";
 import profileRoute from "./src/routes/profile.route.js";
 import tagRoute from "./src/routes/tag.route.js";
+import authRoute from "./src/routes/auth.route.js";
 
 dotenv.config();
 
@@ -17,11 +18,12 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://localhost:5173", // No es una dirección arbitraria es una desde donde se consulta el front
     credentials: true,
   })
 );
 app.use(cookieParser());
+app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 app.use("/api/profile", profileRoute);
 app.use("/api/tag", tagRoute);
