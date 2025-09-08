@@ -1,6 +1,6 @@
 import { UserModel } from "../models/user.model.js";
 import { ProfileModel } from "../models/profile.model.js";
-import { generateToken } from "../helpers/jwt..helpers.js";
+import { generateToken } from "../helpers/jwt.helpers.js";
 import { comparePassword, hashPassword } from "../helpers/bcrypt.helpers.js";
 
 export const register = async (req, res) => {
