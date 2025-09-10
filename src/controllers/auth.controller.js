@@ -18,7 +18,9 @@ export const register = async (req, res) => {
   try {
     const hashedPassword = await hashPassword(password);
 
-    const existingUser = UserModel.findOne({ where: { username: username } });
+    const existingUser = await UserModel.findOne({
+      where: { username: username },
+    });
     if (existingUser) {
       return res
         .status(400)
@@ -34,10 +36,10 @@ export const register = async (req, res) => {
     }
 
     const user = await UserModel.create({
-      username,
-      email,
-      password,
-      role,
+      username: username,
+      email: email,
+      password: hashedPassword,
+      role: role,
     });
 
     await ProfileModel.create({
@@ -70,7 +72,7 @@ export const login = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: "Credenciales inválidas" });
     }
-    const validPassword = comparePassword(password, user.password);
+    const validPassword = await comparePassword(password, user.password);
     if (!validPassword) {
       return res.status(401).json({ message: "Credenciales inválidas" });
     }
@@ -82,7 +84,7 @@ export const login = async (req, res) => {
       maxAge: 1000 * 60 * 60, // El token va a durar 1 hora
     });
 
-    return res.status({ message: "Login existoso" });
+    return res.status(200).json({ message: "Login existoso" });
   } catch (error) {
     return res
       .status(500)

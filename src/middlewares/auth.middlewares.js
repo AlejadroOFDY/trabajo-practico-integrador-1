@@ -1,4 +1,4 @@
-import { verifyToken } from "../helpers/jwt..helpersjs";
+import { verifyToken } from "../helpers/jwt.helpers.js";
 import { UserModel } from "../models/user.model.js";
 
 /*Este Middleware va verificar la autenticación del usuario mediante JWT Extrae el token de las cookies, lo verifica y adjunta el usuario a la request

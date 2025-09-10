@@ -5,7 +5,7 @@ import {
   logout,
   getUserProfile,
   updateProfile,
-} from "../controllers/authController.js";
+} from "../controllers/auth.controller.js";
 import { authMiddleware } from "../middlewares/auth.middlewares.js";
 import { createUserValidation } from "../middlewares/validations/user.validation.js";
 import {
