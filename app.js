@@ -32,4 +32,5 @@ app.use("/api/articleTag", articleTagRoute);
 
 app.listen(PORT, async () => {
   await start_DB(), console.log(`Servidor corriendo en: localhost ${PORT}`);
+  console.log("---------------------------------------------------");
 });

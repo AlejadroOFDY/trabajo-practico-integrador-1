@@ -61,12 +61,12 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   const { username, password } = req.body;
   try {
-    const user = UserModel.findOne({
+    const user = await UserModel.findOne({
       where: { username: username },
       include: {
         model: ProfileModel,
         as: "profile",
-        attributes: [first_name, last_name],
+        attributes: ["first_name", "last_name"],
       },
     });
     if (!user) {
@@ -86,6 +86,7 @@ export const login = async (req, res) => {
 
     return res.status(200).json({ message: "Login existoso" });
   } catch (error) {
+    console.log(error);
     return res
       .status(500)
       .json({ error: error.message, message: "No se pudo ingresar" });
@@ -99,8 +100,8 @@ export const logout = (req, res) => {
 
 export const getUserProfile = async (req, res) => {
   try {
-    const userProfile = UserModel.findByPk(req.user.id, {
-      attributes: { exclude: { password } },
+    const userProfile = await UserModel.findByPk(req.user.id, {
+      attributes: { exclude: ["password"] },
       include: [
         {
           model: ProfileModel,
@@ -115,18 +116,8 @@ export const getUserProfile = async (req, res) => {
 };
 
 export const updateProfile = async (req, res) => {
-  const user_id = user.id;
-  const {
-    username,
-    email,
-    password,
-    role,
-    first_name,
-    last_name,
-    biography,
-    avatar_url,
-    birth_date,
-  } = req.body;
+  const user_id = req.user.id;
+  const { first_name, last_name, biography, avatar_url, birthday } = req.body;
   try {
     const userProfile = await ProfileModel.findOne({
       where: { user_id: user_id },
@@ -135,6 +126,7 @@ export const updateProfile = async (req, res) => {
       return res.status(404).json({ message: "No se encontró el perfil" });
     }
     await userProfile.update(req.body);
+    return res.status(200).json({ message: "Perfil actualizado exitosamente" });
   } catch (error) {
     return res.status(500).json({ message: "No se pudo encontrar al usuario" });
   }

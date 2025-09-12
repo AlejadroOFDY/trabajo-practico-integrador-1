@@ -61,7 +61,7 @@ export const createProfileValidation = [
 
 // Actualizar
 export const updateProfileValidation = [
-  param("id")
+  /*   param("id")
     .isInt()
     .withMessage("El id debe ser un número entero")
     .custom(async (value) => {
@@ -69,7 +69,7 @@ export const updateProfileValidation = [
       if (!existingProfile) {
         throw new Error("No se encontró el perfil");
       }
-    }),
+    }), */
   body("first_name")
     .notEmpty()
     .withMessage("El primer nombre es un campo obligatorio")
