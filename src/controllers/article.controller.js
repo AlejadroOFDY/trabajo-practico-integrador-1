@@ -12,8 +12,6 @@ export const getAllArticles = async (req, res) => {
           model: UserModel,
           as: "author",
         },
-      ],
-      include: [
         {
           model: TagModel,
           as: "tags",
@@ -38,6 +36,35 @@ export const getArticleById = async (req, res) => {
     return res.status(500).json({
       error: error.message,
       message: "No se pudo obtener el artículo",
+    });
+  }
+};
+
+// Obtener por usuario autenticado
+// Obtener artículos del usuario autenticado
+export const getArticlesByUser = async (req, res) => {
+  try {
+    const articles = await ArticleModel.findAll({
+      where: {
+        user_id: req.user.id,
+      },
+      include: [
+        {
+          model: UserModel,
+          as: "author",
+        },
+        {
+          model: TagModel,
+          as: "tags",
+        },
+      ],
+    });
+
+    return res.status(200).json(articles);
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+      message: "No se pudieron obtener tus artículos",
     });
   }
 };
